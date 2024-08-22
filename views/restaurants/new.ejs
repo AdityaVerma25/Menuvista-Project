@@ -1,0 +1,84 @@
+<% layout("/layouts/boilerplate") %>
+<body>
+  <div class="container-fluid container-top mb-custom">
+    <div class="form-container ">
+      <h2 class="text-center">Add Your Restaurant</h2>
+      <form
+        id="restaurantForm"
+        method="post"
+        action="/resta"
+        novalidate
+        class="needs-validation"
+        enctype="multipart/form-data"
+      >
+        <div class="mb-3">
+          <label for="title" class="form-label">Restaurant Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="title"
+            placeholder="Enter restaurant name"
+            maxlength="30"
+            name="resta[title]"
+            required
+          />
+          <div class="invalid-feedback">Please enter restaurant name.</div>
+        </div>
+        <div class="mb-3">
+          <label for="imageFile" class="form-label"
+            >Upload Restaurant Image</label
+          >
+          <input
+            type="file"
+            class="form-control"
+            id="imageFile"
+            name="resta[image]"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="description" class="form-label">About Restaurant</label>
+          <textarea
+            class="form-control"
+            id="description"
+            name="resta[description]"
+            rows="3"
+            placeholder="Write about restaurant"
+            spellcheck="true"
+            minlength="200"
+            maxlength="250"
+            required
+          ></textarea>
+          <div class="invalid-feedback">
+            Please provide a description about restaurant.
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="location" class="form-label">Location</label>
+          <input
+            type="text"
+            class="form-control"
+            name="resta[location]"
+            id="location"
+            placeholder="Enter location"
+            required
+          />
+          <div class="invalid-feedback">Please enter location.</div>
+        </div>
+        <div class="mb-3">
+          <label for="contact-num" class="form-label">Contact</label>
+          <input
+            type="text"
+            class="form-control"
+            name="resta[contact]"
+            id="contact-num"
+            maxlength="10"
+            placeholder="Enter contact number"
+            required
+          />
+          <div class="invalid-feedback">Please enter valid contact number.</div>
+        </div>
+        <button type="submit" class="btn btn-primary mb-3">Submit</button>
+      </form>
+    </div>
+  </div>
+</body>

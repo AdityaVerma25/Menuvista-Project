@@ -1,0 +1,89 @@
+<% layout("/layouts/boilerplate") %>
+<body>
+  <div class="container-fluid container-top mb-custom">
+    <div class="form-container">
+      <h2 class="text-center">Edit Dish Details</h2>
+      <form
+      id="restaurantForm"  
+      method="post" action="/resta/<%= resta._id %>/items/<%= item._id %>?_method=PUT" novalidate class="needs-validation">
+        <div class="mb-3">
+          <label for="dishName" class="form-label">Dish Name</label>
+          <input
+            type="text"
+            class="form-control"
+            value="<%= item.title %>"
+            id="dishName"
+            placeholder="Enter dish name"
+            name="item[dishName]"
+            required
+          />
+          <div class="invalid-feedback">
+            Please enter dish name.
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="imageFile" class="form-label">Upload Dish Image</label>
+          <input
+            type="file"
+            class="form-control"
+            id="imageFile"
+            name="item[image][url]"
+            accept="image/*"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="aboutDish" class="form-label">About Dish</label>
+          <textarea
+            class="form-control"
+            id="aboutDish"
+            name="item[aboutDish]"
+            rows="3"
+            placeholder="Write about the dish"
+            spellcheck="true"
+            required
+          ><%= item.description %></textarea>
+          <div class="invalid-feedback">
+            Please provide a description about the dish.
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="category" class="form-label">Category</label>
+          <select
+            class="form-control"
+            id="category"
+            name="item[category]"
+            required
+          >
+            <option value="" disabled>Select category</option>
+            <option value="Veg" <%= item.category === 'Veg' ? 'selected' : '' %>>Veg</option>
+            <option value="Nonveg" <%= item.category === 'Nonveg' ? 'selected' : '' %>>Nonveg</option>
+            <option value="Desserts" <%= item.category === 'Desserts' ? 'selected' : '' %>>Desserts</option>
+            <option value="Drinks" <%= item.category === 'Drinks' ? 'selected' : '' %>>Drinks</option>
+          </select>
+          <div class="invalid-feedback">
+            Please select a category.
+          </div>
+        </div>
+        <div class="mb-3">
+    <label for="price" class="form-label">Price</label>
+    <input
+      type="number"
+      class="form-control"
+      id="price"
+      value="<%= item.price %>"
+      name="item[price]"
+      placeholder="Enter price"
+      required
+    />
+    <div class="invalid-feedback">
+      Please enter a price.
+    </div>
+  </div>
+        <button type="submit" class="btn btn-primary">Update</button>
+        <a href="/resta/<%= resta._id %>" class="btn btn-danger">Cancel</a>
+      </form>
+    </div>
+  </div>
+</body>
+
+

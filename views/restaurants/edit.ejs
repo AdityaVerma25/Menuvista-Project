@@ -1,0 +1,99 @@
+<% layout("/layouts/boilerplate") %>
+<body>
+  <div class="container-fluid mb-custom">
+    <div class="form-container  edit-form">
+      <h2 class="text-center">Edit Details</h2>
+      <form
+        id="restaurantForm"
+        method="post"
+        action="/resta/<%=resta._id%>?_method=PUT"
+        novalidate
+        class="needs-validation"
+        enctype="multipart/form-data"
+      >
+        <div class="mb-3">
+          <label for="title" class="form-label">Restaurant Name</label>
+          <input
+            type="text"
+            class="form-control"
+            value="<%=resta.title %>"
+            id="title"
+            placeholder="Enter restaurant name"
+            name="resta[title]"
+            required
+          />
+          <div class="invalid-feedback">Please enter restaurant name.</div>
+        </div>
+        <div class="mb-3">
+          <label for="imageFile" class="form-label"
+            >Upload Restaurant Image</label
+          >
+          <input
+            type="file"
+            class="form-control"
+            id="imageFile"
+            name="resta[image]"
+            accept="image/*"
+          />
+          <% if (resta.image && resta.image.filename) { %>
+          <div class="mt-2">
+            <img
+              src="<%= resta.image.url %>"
+              alt="Current Image"
+              class="img-fluid border rounded opacity-75"
+              style="max-height: 150px"
+            />
+          </div>
+          <% } %>
+        </div>
+        <div class="mb-3">
+          <label for="description" class="form-label">About Restaurant</label>
+          <textarea
+            class="form-control"
+            id="description"
+            name="resta[description]"
+            rows="3"
+            placeholder="Write about restaurant"
+            spellcheck="true"
+            required
+          >
+<%=resta.description%></textarea
+          >
+          <div class="invalid-feedback">
+            Please provide a description about restaurant.
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="location" class="form-label">Location</label>
+          <input
+            type="text"
+            class="form-control"
+            value="<%=resta.location %>"
+            name="resta[location]"
+            id="location"
+            placeholder="Enter location"
+            required
+          />
+          <div class="invalid-feedback">Please enter location.</div>
+        </div>
+        <div class="mb-3">
+          <label for="contact-num" class="form-label">Contact</label>
+          <input
+            type="text"
+            class="form-control"
+            name="resta[contact]"
+            id="contact-num"
+            value="<%=resta.contact %>"
+            placeholder="Enter contact number"
+            required
+          />
+          <div class="invalid-feedback">
+            Please enter a valid contact number.
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary mb-3">Update</button>
+        <a href="/resta/<%=resta._id%>" class="btn btn-danger mb-3">Cancel</a>
+      </form>
+    </div>
+  </div>
+</body>

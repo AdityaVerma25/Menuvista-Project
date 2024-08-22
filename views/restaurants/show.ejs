@@ -1,0 +1,382 @@
+<% layout("/layouts/boilerplate") %>
+<body>
+  <div class="container mt-custom p-2">
+    <!-- Restaurant Info Card -->
+    <%if(currUser){%>
+    <div
+      class="card mb-3 p-3"
+      style="max-width: 80vw; position: relative"
+    >
+      <div class="row g-0">
+        <div class="col-md-4 d-flex flex-column align-items-stretch">
+          <img
+            src="<%= resta.image.url %>"
+            class="img-fluid rounded-start mb-2"
+            alt="<%= resta.title %>"
+          />
+        </div>
+        <div class="col-md-8">
+          <div class="card-body position-relative">
+            <!-- QR Code in Top-Right Corner, shifted 20px upwards -->
+            <% if (resta.qrCodeUrl) { %>
+            <div
+              class="qr-code-container position-absolute top-50 end-0 mt-4 qrCode"
+              style="transform: translateY(-20px)"
+            >
+              <img
+                src="<%= resta.qrCodeUrl %>"
+                class="img-fluid qrCode"
+                alt="QR Code for <%= resta.title %>"
+                style="width: 150px; height: 150px"
+              />
+            </div>
+            <% } %>
+
+            <h1 class="card-title"><%= resta.title %></h1>
+            <p class="card-text show-description opacity-75">
+              <%= resta.description %>
+            </p>
+            <p class="card-text">
+              <small class="text-muted">
+                <i class="fa-solid fa-location-dot"></i>&nbsp;&nbsp;<%=
+                resta.location %>
+              </small>
+            </p>
+            <p class="card-text">
+              <small class="text-muted">
+                <i class="fa-solid fa-phone"></i>&nbsp;&nbsp;(+91)&nbsp;<%=
+                resta.contact %>
+              </small>
+            </p>
+
+            <!-- Buttons: Edit, Delete, Add Item, Download QR Code -->
+            <% if (currUser && currUser._id.equals(resta.owner)) { %>
+            <div class="button-group d-flex justify-content-start resta-button">
+              <a
+                href="/resta/<%= resta._id %>/edit"
+                class="btn btn-primary me-2 mt-2 edit-btn"
+                style="width: 80px"
+                >Edit</a
+              >
+              <form
+                method="post"
+                action="/resta/<%= resta._id %>?_method=DELETE"
+                class="d-inline me-2 card-btn"
+              >
+                <button type="submit" class="btn btn-danger mt-2 edit-btn">
+                  Delete
+                </button>
+              </form>
+              <a href="#menu-form" class="btn btn-primary mt-2 card-btn"
+                ><span class="btn-text">+</span>Add Item</a
+              >
+
+              <!-- Download QR Code Button -->
+              <% if (resta.qrCodeUrl) { %>
+              <a
+                href="<%= resta.qrCodeUrl %>"
+                download="restaurant_qr_<%= resta.title %>.png"
+                class="btn btn-secondary rounded d-inline mt-2 card-btn"
+                >QR-code&nbsp;<i class="fa-solid fa-download"></i
+              ></a>
+              <% } %>
+            </div>
+            <% } %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <%}%>
+
+    <!-- Restaurant Menu -->
+    <div class="p-4 mb-3">
+      <fieldset class="text-center mb-3">
+        <legend><h1>Restaurant Menu</h1></legend>
+        <div class="container mb-4">
+          <div class="row justify-content-center align-items-center">
+            <!-- Search Bar -->
+            <div class="col-auto search-bar">
+              <input
+                type="text"
+                id="search-bar"
+                class="form-control"
+                placeholder="Search for items..."
+                style="max-width: 300px"
+              />
+            </div>
+
+            <!-- Toggle Buttons for Categories -->
+            <div class="col-auto">
+              <div
+                id="category-buttons"
+                class="btn-group"
+                role="group"
+                aria-label="Categories"
+              >
+                <button
+                  type="button"
+                  class="btn btn-outline-primary rounded me-2"
+                  data-category="all"
+                >
+                  Category
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-outline-success rounded me-2"
+                  data-category="Veg"
+                  style="color: green"
+                >
+                  <i class="fa-solid fa-leaf"></i>
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-outline-danger rounded me-2"
+                  data-category="Nonveg"
+                  style="color: red"
+                >
+                  <i class="fa-solid fa-drumstick-bite"></i>
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-outline-warning rounded me-2"
+                  data-category="Desserts"
+                  style="color: yellow"
+                >
+                  <i class="fa-solid fa-stroopwafel"></i>
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-outline-primary rounded"
+                  data-category="Drinks"
+                >
+                  <i class="fa-solid fa-martini-glass-citrus"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+
+      <% for (let item of resta.items) { %>
+      <div
+        class="card card-item mb-4 p-3"
+        style="max-width: 80vw; margin: 0 auto"
+        data-category="<%= item.category %>"
+      >
+        <div class="row g-0">
+          <% if (item.image && item.image.url) { %>
+          <div class="col-md-4 d-flex align-items-stretch">
+            <img
+              src="<%= item.image.url %>"
+              class="img-fluid rounded-start"
+              alt="<%= item.title %>"
+            />
+          </div>
+          <% } %>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h2 class="card-title"><%= item.title %></h2>
+              <p class="card-text opacity-75"><%= item.description %></p>
+              <p class="card-text">
+                <small class="text-muted">
+                  <i class="fa-solid fa-utensils"></i>&nbsp;&nbsp;<%=
+                  item.category %>
+                </small>
+              </p>
+              <p class="card-text">
+                <small class="text-muted">
+                  <i class="fa-solid fa-tag"></i>&nbsp;&nbsp;₹&nbsp;<%=
+                  item.price.toLocaleString("en-IN") %>
+                </small>
+              </p>
+              <%if(item.lastUpdated != null){%>
+              <p class="card-text opacity-75">
+                <small class="text-muted"
+                  >LastUpdate:&nbsp;<%=item.lastUpdated.toLocaleString("en-IN")%></small
+                >
+              </p>
+              <%}%>
+              <div class="d-flex justify-content-end item-btn">
+                <% if (currUser && currUser._id.equals(resta.owner)) { %>
+                <a
+                  href="/resta/<%= resta._id %>/items/<%= item._id %>/edit"
+                  class="btn btn-sm btn-primary me-2 px-3"
+                >
+                  Edit
+                </a>
+                <form
+                  method="POST"
+                  action="/resta/<%= resta._id %>/items/<%= item._id %>?_method=DELETE"
+                  class="d-inline"
+                >
+                  <input type="hidden" name="_method" value="DELETE" />
+                  <button type="submit" class="btn btn-sm btn-danger">
+                    Delete
+                  </button>
+                </form>
+                <% } %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <% } %>
+    </div>
+
+    <% if (currUser && currUser._id.equals(resta.owner)) { %>
+    <!-- Menu Form -->
+    <div id="menu-form" class="container-fluid mb-5">
+      <div class="form-container mb-3">
+        <h2 class="text-center mb-4">Add Items</h2>
+        <form
+          method="post"
+          action="/resta/<%= resta._id %>/addItem"
+          novalidate
+          class="needs-validation"
+          enctype="multipart/form-data"
+        >
+          <div class="mb-3">
+            <label for="dishName" class="form-label">Dish Name</label>
+            <input
+              type="text"
+              class="form-control"
+              id="dishName"
+              placeholder="Enter dish name"
+              name="item[title]"
+              required
+            />
+            <div class="invalid-feedback">Please enter a dish name.</div>
+          </div>
+          <div class="mb-3">
+            <label for="imageFile" class="form-label">Upload Image</label>
+            <input
+              type="file"
+              class="form-control"
+              id="imageFile"
+              name="item[image]"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="aboutDish" class="form-label">About Dish</label>
+            <textarea
+              class="form-control"
+              id="aboutDish"
+              name="item[description]"
+              rows="3"
+              placeholder="Write about the dish..."
+              spellcheck="true"
+              minlength="200"
+              maxlength="250"
+              required
+            ></textarea>
+            <div class="invalid-feedback">Please write about the dish.</div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="category" class="form-label">Category</label>
+              <select
+                class="form-control"
+                id="category"
+                name="item[category]"
+                required
+              >
+                <option value="" disabled selected>Select category</option>
+                <option value="Veg">Veg</option>
+                <option value="Nonveg">Nonveg</option>
+                <option value="Desserts">Desserts</option>
+                <option value="Drinks">Drinks</option>
+              </select>
+              <div class="invalid-feedback">Please select a category.</div>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="price" class="form-label">Price</label>
+              <input
+                type="number"
+                class="form-control"
+                id="price"
+                name="item[price]"
+                placeholder="Enter price"
+                required
+              />
+              <div class="invalid-feedback">Please enter a price.</div>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary mb-3">Submit</button>
+        </form>
+      </div>
+    </div>
+    <% } %>
+  </div>
+</body>
+<style>
+  .card {
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+  }
+
+  .card img {
+    margin-top: 10px;
+    height: 290px;
+    width: 100%;
+    border-radius: 10px;
+    object-fit: cover;
+  }
+
+  .card-item {
+    transition: transform 0.2s;
+    height: calc(100% - 210px);
+  }
+
+  .card-item:hover {
+    transform: scale(1.02);
+  }
+
+  .card-body {
+    padding: 20px;
+  }
+
+  .card-item img {
+    width: 100%;
+    height: 255px;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+
+  .text-center {
+    text-align: center;
+  }
+
+  .mt-custom {
+    margin-top: 20px;
+  }
+
+  .btn-block {
+    display: block;
+    width: 100%;
+    text-align: center;
+  }
+
+  .btn-text {
+    margin-right: 8px;
+  }
+
+  .button-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .button-group .btn {
+    margin-right: 5px;
+  }
+
+  .button-group form {
+    margin: 0;
+  }
+
+  .item-btn {
+    margin-top: -35px;
+  }
+</style>
