@@ -1,138 +1,43 @@
 <%layout("/layouts/boilerplate")%>
 <body>
-  <div class="container-fluid mt-5 p-3 hero-form">
+  <div class="mt-custom">
     <div class="signin-container">
-      <!-- Left Side (Form) -->
-      <div class="left">
-        <div class="form-container">
-          <h2 class="text-center">Sign In</h2>
-          <form
+      <div class="form-container">
+        <h2 class="text-center">SignIn on Menuvista</h2>
+        <form
           id="restaurantForm"
-            action="/user/signin"
-            method="post"
-            class="needs-validation p-5"
-            novalidate
-          >
-            <div class="mb-3">
-              <input
-                id="username"
-                type="text"
-                class="form-control"
-                name="username"
-                placeholder="Enter your username"
-                required
-              />
-            </div>
-            <div class="mb-3">
-              <input
-                id="password"
-                type="password"
-                class="form-control"
-                name="password"
-                placeholder="Enter your password"
-                required
-              />
-            </div>
-            <button class="btn btn-success">Login</button>
-            <a href="/user/updatePassword" class="mt-4 d-block"
-              >Reset Password?</a
-            >
-          </form>
-        </div>
-      </div>
-
-      <!-- Right Side (Text) -->
-      <div class="right">
-        <div class="text-right">
-           <h2>
-          <strong style="color: rgb(65, 65, 65)"> Menuvista</strong>
-        </h2>
-          <p class="mb-5 mt-5">
-            Menuvista revolutionizes dining with instant, interactive menus right
-            on your smartphone. Scan our QR code and access a restaurant’s full
-            menu in seconds—no paper, no wait. Enjoy a sleek, modern dining
-            experience that puts every dish at your fingertips, making every
-            meal a delight with Menuvista
-          </p>
-          <a href="/user/signup" id="switchToLogin">Register as new user</a>
-        </div>
+          action="/user/signin"
+          method="post"
+          class="needs-validation p-5"
+          novalidate
+        >
+          <div class="mb-3">
+            <input
+              id="username"
+              type="text"
+              class="form-control"
+              name="username"
+              placeholder="Enter your username"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <input
+              id="password"
+              type="password"
+              class="form-control"
+              name="password"
+              placeholder="Enter your password"
+              required
+            />
+          </div>
+          <button class="btn btn-success mb-4">Login</button>
+          <div class="d-flex justify-content-between">
+            <a href="/user/updatePassword">Update Password?</a>
+            <a href="/user/signup">Register as new user</a>
+          </div>
+        </form>
       </div>
     </div>
   </div>
 </body>
-<style>
-  .container-fluid {
-    height: 90vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .signin-container {
-    display: flex;
-    width: 100%;
-    max-width: 1200px;
-    height: 85%;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-
-  .left,
-  .right {
-    flex: 1;
-    padding: 2rem;
-    box-sizing: border-box;
-  }
-
-  .left {
-    background-color: #f8f9fa;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    border-right: 1px solid #ddd;
-  }
-
-  .right {
-    background-color: #ffffff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .form-container {
-    width: 100%;
-    max-width: 500px;
-  }
-
-  .form-container h2 {
-    margin-bottom: 1.5rem;
-  }
-
-  .form-container a {
-    display: block;
-    margin-top: 1rem;
-    text-align: center;
-    color: #007bff;
-    text-decoration: none;
-  }
-
-  .form-container a:hover {
-    text-decoration: underline;
-  }
-
-  .form-container input {
-    margin-bottom: 1rem;
-  }
-
-  .text-right a {
-    font-size: 1rem;
-    text-decoration: none;
-    color: #007bff;
-  }
-
-  .text-right a:hover {
-    text-decoration: underline;
-  }
-</style>
