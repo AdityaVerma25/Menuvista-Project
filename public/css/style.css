@@ -146,6 +146,12 @@ h6 {
   background-color: #ffffff;
   padding: 2rem;
   box-sizing: border-box;
+  margin-left: auto;
+  margin-right: auto;
+}
+.form-container a:hover{
+  color: blue;
+  text-decoration: underline;
 }
 
 @media (max-width: 480px) {
@@ -172,18 +178,15 @@ h6 {
     width: auto;
     padding: 10px;
   }
+  .form-container a:hover{
+    color: blue;
+    text-decoration: underline;
+  }
   .edit-form {
     height: 750px !important;
   }
   .hero-form {
     margin: 0px !important;
-  }
-  .right {
-    display: none !important;
-  }
-  .left {
-    height: 100%;
-    width: 100%;
   }
   .card {
     height: auto !important;
@@ -240,6 +243,10 @@ h6 {
     height: 70% !important;
     width: 100% !important;
     padding: 10px;
+  }
+   .form-container a:hover{
+    color: blue;
+    text-decoration: underline;
   }
   .edit-form {
     height: 750px !important;
