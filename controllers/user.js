@@ -56,7 +56,7 @@ module.exports.saveNewPassword = async (req, res, next) => {
     const user = await User.findOne({ username });
     if (!user) {
       req.flash("error", "No account with that username exists.");
-      return res.redirect("/user/updatepasswordForm");
+      return res.redirect("/user/updatePasswordForm");
     }
     await user.setPassword(newPassword);
     await user.save();
