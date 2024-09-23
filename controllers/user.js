@@ -47,7 +47,7 @@ module.exports.loginForm = (req, res) => {
 
 // Route for updating password form
 module.exports.updatePasswordForm = (req, res) => {
-  res.render("users/updatepassword.ejs");
+  res.render("users/updatePassword.ejs");
 };
 
 module.exports.saveNewPassword = async (req, res, next) => {
